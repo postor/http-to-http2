@@ -1,12 +1,10 @@
-# with shell on ubuntu
+# with shell on ubuntu | 通过ubuntu命令行
 
-this also explains how docker works
+## prepare | 准备
 
-## prepare
+1.to use certbot you need a domain and config it to your server | 首先将域名指向该服务器
 
-1.to use certbot you need a domain and config it to your server
-
-2.install nginx, certbot and start a http blog
+2.install nginx, certbot and start a http blog | 然后安装nginx， certbot 和 一个测试用的blog
 
 ```
 # registry
@@ -35,7 +33,7 @@ curl localhost:4000
 # get blog page
 ```
 
-## nginx domain config
+## nginx domain config | 给nginx配置域名
 
 ```
 sudo cd /etc/nginx/sites-enabled
@@ -59,10 +57,10 @@ vi /var/www/test.i18ntech.com/index.html
 sudo service nginx restart
 
 curl http://test.i18ntech.com/
-# get what you put in index.html
+# get what you put in index.html | curl结果为你编辑的index.html
 ```
 
-## generate certification with certbot
+## generate certification with certbot | 使用certbot生成证书
 
 ```
 sudo certbot --nginx
@@ -89,7 +87,23 @@ curl http://test.i18ntech.com/
 # get 301
 ```
 
-## config proxy and http2
+## config http2 | 配置http2
+
+```
+sudo cd /etc/nginx/sites-enabled
+sudo vi test.i18ntech.com
+
+#    listen [::]:443 ssl http2 ipv6only=on; # managed by Certbot
+#    listen 443 ssl http2; # managed by Certbot
+
+sudo service nginx restart
+curl http://test.i18ntech.com/
+# browser get h2 protocol
+```
+
+## config proxy | 配置代理
+
+if your site is running on nginx, skip this | 如果你本来就是用的nginx跳过此步骤
 
 ```
 sudo cd /etc/nginx/sites-enabled
@@ -97,20 +111,14 @@ sudo vi test.i18ntech.com
 #       location / {
 #                proxy_pass http://localhost:4000;
 #       }
-#    listen [::]:443 ssl http2 ipv6only=on; # managed by Certbot
-#    listen 443 ssl http2; # managed by Certbot
-
-# **note** change above lines
-
-sudo service nginx restart
-curl http://test.i18ntech.com/
-# browser get h2 protocol
 ```
 
-## update certification 
+## update certification | 更新证书
 
 ```
 certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"
 ```
 
-you can add it to cron job
+you can add it to cron job daily or weekly, newly generated certification expires in 90 days `certbot renew` will only update the ones who will expire in less than 30 days
+
+你可以把命令添加到cron任务里，新生成的证书有90天有效期，`certbot renew`只会更新剩余天数不到30天的，所以每天或者每周运行都是可以的
