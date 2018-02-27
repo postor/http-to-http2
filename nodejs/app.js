@@ -23,7 +23,7 @@ spdy.createServer({
   key: fs.readFileSync(certPath + '/privkey.pem'),
   cert: fs.readFileSync(certPath + '/fullchain.pem')
 }, server)
-  .listen(433, (err) => {
+  .listen(443, (err) => {
     if (err) throw err
     console.log('> Ready http2 on https://localhost')
   })
