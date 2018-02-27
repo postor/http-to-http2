@@ -1,12 +1,18 @@
 const express = require('express')
 const spdy = require('spdy')
 const fs = require('fs')
-const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
+const url = require('url')
 
 const server = express()
 const certPath = '/etc/letsencrypt/live/test.i18ntech.com/'
 
-server.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/]))
+server.use((req, res, next) => {
+  if (req.secure) {
+    next()
+    return
+  }
+  res.redirect(fullUrl(req))
+})
 
 server.use('/', (req, res) => {
   res.send('http2!')
@@ -27,3 +33,11 @@ spdy.createServer({
     if (err) throw err
     console.log('> Ready http2 on https://localhost')
   })
+
+function fullUrl(req) {
+  return url.format({
+    protocol: 'https',
+    host: req.get('host'),
+    pathname: req.originalUrl
+  });
+}
