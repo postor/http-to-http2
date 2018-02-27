@@ -1,6 +1,8 @@
 # with node.js on ubuntu
 
-## prepare
+在ubuntu环境的Node.JS（express）中使用
+
+## prepare | 准备
 
 ```
 # registry
@@ -28,7 +30,7 @@ npm install
 
 ```
 
-## generate certification
+## generate certification | 生成证书
 
 ```
 certbot certonly
@@ -59,9 +61,23 @@ certbot certonly
 #Please enter in your domain name(s) (comma and/or space separated)  (Enter 'c'
 #to cancel): test.i18ntech.com
 
+```
+
+**NOTE** keep generated certification path in mind, something like `/etc/letsencrypt/live/test.i18ntech.com/` | 记住生成证书的地址，类似 `/etc/letsencrypt/live/test.i18ntech.com/` 
 
 
+## start service | 启动服务
 
-
+modify http-to-http2/nodejs/app.js | 修改 http-to-http2/nodejs/app.js
 
 ```
+const certPath = '/etc/letsencrypt/live/test.i18ntech.com/'
+```
+
+change this value to your certification path then start server | 修改为你的证书位置，然后启动服务
+
+```
+npm run start
+```
+
+
