@@ -1,7 +1,7 @@
 const express = require('express')
 const spdy = require('spdy')
 const fs = require('fs')
-const redirectToHTTPS = require('express-http-to-https')
+const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
 
 const server = express()
 const certPath = '/etc/letsencrypt/live/test.i18ntech.com/'
