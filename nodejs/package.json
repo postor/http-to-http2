@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "init": "LETSENCRYPT_SERVER=staging node app.js",
-    "start": "node app.js"
+    "dev": "node app.js",
+    "start": "NODE_ENV=production node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.2",
-    "letsencrypt-express": "^2.0.6"
+    "greenlock-express": "^2.0.6"
   }
 }
