@@ -6,7 +6,7 @@ const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
 const server = express()
 const certPath = '/etc/letsencrypt/live/test.i18ntech.com/'
 
-server.use(redirectToHTTPS())
+server.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/]))
 
 server.use('/', (req, res) => {
   res.send('http2!')
