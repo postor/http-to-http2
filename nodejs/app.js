@@ -20,8 +20,8 @@ server.listen(80, (err) => {
 
 //http2
 spdy.createServer({
-  key: fs.readFileSync(__dirname + '/privkey.pem'),
-  cert: fs.readFileSync(__dirname + '/fullchain.pem')
+  key: fs.readFileSync(certPath + '/privkey.pem'),
+  cert: fs.readFileSync(certPath + '/fullchain.pem')
 }, server)
   .listen(433, (err) => {
     if (err) throw err
