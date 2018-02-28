@@ -81,3 +81,8 @@ npm run start
 ```
 
 
+## renew certification | 更新证书
+
+```
+npm run renew 
+```
